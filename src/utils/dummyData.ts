@@ -12,6 +12,16 @@ export interface RocketTrajectory {
   time: number;
   original: [number, number, number];
   deviation: [number, number, number];
+  alternative1: [number, number, number];
+  alternative2: [number, number, number];
+  kpIndex: number;
+  severity: 'low' | 'medium' | 'high';
+}
+
+export interface WeatherZone {
+  position: [number, number, number];
+  severity: 'safe' | 'moderate' | 'severe';
+  radius: number;
 }
 
 export const generateDummySpaceWeather = (): SpaceWeatherData => {
@@ -62,9 +72,8 @@ export const generateRocketTrajectory = (includeDeviation: boolean = false): Roc
       Math.sin(angle) * radius,
     ];
     
-    // Deviation trajectory (offset if severe weather)
+    // Deviation trajectory (green - safe path)
     let deviation: [number, number, number] = original;
-    
     if (includeDeviation && t > 0.3) {
       const deviationAngle = angle + Math.PI / 6;
       deviation = [
@@ -74,14 +83,53 @@ export const generateRocketTrajectory = (includeDeviation: boolean = false): Roc
       ];
     }
     
+    // Alternative path 1 (yellow - moderate risk)
+    let alternative1: [number, number, number] = original;
+    if (includeDeviation && t > 0.3) {
+      const alt1Angle = angle + Math.PI / 8;
+      alternative1 = [
+        Math.cos(alt1Angle) * (radius + 0.3),
+        t * 8 - 0.15,
+        Math.sin(alt1Angle) * (radius + 0.3),
+      ];
+    }
+    
+    // Alternative path 2 (blue - optimal efficiency)
+    let alternative2: [number, number, number] = original;
+    if (includeDeviation && t > 0.3) {
+      const alt2Angle = angle + Math.PI / 4;
+      alternative2 = [
+        Math.cos(alt2Angle) * (radius + 0.7),
+        t * 8 - 0.5,
+        Math.sin(alt2Angle) * (radius + 0.7),
+      ];
+    }
+    
+    const kpIndex = Math.random() * 9;
+    const severity: 'low' | 'medium' | 'high' = 
+      kpIndex < 3 ? 'low' : kpIndex < 6 ? 'medium' : 'high';
+    
     points.push({
       time: t,
       original,
       deviation,
+      alternative1,
+      alternative2,
+      kpIndex,
+      severity,
     });
   }
   
   return points;
+};
+
+export const generateWeatherZones = (): WeatherZone[] => {
+  return [
+    { position: [1.5, 0.5, 1.5], severity: 'severe', radius: 0.8 },
+    { position: [-1.2, 0.8, 1.8], severity: 'moderate', radius: 0.6 },
+    { position: [0.5, -1.5, -1.5], severity: 'safe', radius: 0.5 },
+    { position: [1.8, 1.2, -0.8], severity: 'moderate', radius: 0.7 },
+  ];
 };
 
 export const alertMessages = [

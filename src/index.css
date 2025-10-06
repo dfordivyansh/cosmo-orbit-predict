@@ -39,6 +39,9 @@ All colors MUST be HSL.
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
     
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+    
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 217 91% 60%;
@@ -90,6 +93,9 @@ All colors MUST be HSL.
     
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
+    
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
     
     --border: 217 33% 17%;
     --input: 217 33% 17%;
@@ -151,6 +157,34 @@ All colors MUST be HSL.
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+  
+  /* Shadow Glow Utilities */
+  .shadow-glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+  
+  .shadow-glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+  
+  .shadow-glow-warning {
+    box-shadow: var(--glow-warning);
+  }
+  
+  /* Gradient Backgrounds */
+  .bg-gradient-nebula {
+    background: var(--gradient-nebula);
+  }
+  
+  /* Float Animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
   }
   
   /* Smooth Scrollbar */
