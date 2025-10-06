@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Moon, Sun, Rocket } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Button } from './ui/button';
-import rocketLogo from '@/assets/rocket-logo.png';
+import cosmoPredictLogo from '@/assets/cosmopredict-logo.png';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -25,7 +25,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <img 
-              src={rocketLogo} 
+              src={cosmoPredictLogo} 
               alt="CosmoPredict Logo" 
               className="h-10 w-10 transition-transform group-hover:scale-110"
             />
